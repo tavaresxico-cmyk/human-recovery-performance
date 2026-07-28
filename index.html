@@ -94,5 +94,35 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (() => {
+        const email = "tavaresxico@gmail.com";
+        const updateContact = () => {
+          const button = document.querySelector(".contact-card .button-acid");
+          const note = document.querySelector(".contact-card small");
+          if (!button) return;
+          const isPortuguese = document.documentElement.lang === "pt";
+          const subject = isPortuguese
+            ? "Human Recovery Performance System — Agendar conversa"
+            : "Human Recovery Performance System — Schedule a conversation";
+          button.href = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+          button.setAttribute(
+            "aria-label",
+            isPortuguese
+              ? "Enviar email a Francisco Tavares para agendar uma conversa"
+              : "Email Francisco Tavares to schedule a conversation"
+          );
+          if (note) note.textContent = email;
+        };
+        const observer = new MutationObserver(updateContact);
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["lang"],
+          childList: true,
+          subtree: true
+        });
+        updateContact();
+      })();
+    </script>
   </body>
 </html>
