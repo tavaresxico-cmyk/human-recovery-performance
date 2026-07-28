@@ -10,6 +10,43 @@
     <link rel="stylesheet" crossorigin href="/assets/index-BqbU86s8.css">
     <link rel="stylesheet" href="/assets/mobile-fixes.css?v=20260728">
     <style>
+      .button-acid > span[aria-hidden="true"] {
+        position: relative;
+        display: inline-block;
+        flex: 0 0 17px;
+        width: 17px;
+        height: 17px;
+        overflow: visible;
+        color: currentColor;
+        font-size: 0;
+        line-height: 1;
+        transform: none;
+      }
+
+      .button-acid > span[aria-hidden="true"]::before {
+        content: "";
+        position: absolute;
+        right: 1px;
+        bottom: 2px;
+        width: 13px;
+        height: 2px;
+        border-radius: 2px;
+        background: currentColor;
+        transform: rotate(-45deg);
+        transform-origin: right center;
+      }
+
+      .button-acid > span[aria-hidden="true"]::after {
+        content: "";
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid currentColor;
+        border-right: 2px solid currentColor;
+      }
+
       @media (max-width: 560px) {
         .button-primary > span[aria-hidden="true"],
         .nav-cta > span[aria-hidden="true"] {
