@@ -94,5 +94,20 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.addEventListener("load", function () {
+        if (!window.matchMedia("(max-width: 900px), (pointer: coarse)").matches) return;
+        window.requestAnimationFrame(function () {
+          var contactLink = document.querySelector('a.button-acid[href^="mailto:"]');
+          if (!contactLink) return;
+          var subject = document.documentElement.lang === "pt"
+            ? "Human Recovery Performance System — Agendar conversa"
+            : "Human Recovery Performance System — Schedule a conversation";
+          contactLink.href = "https://mail.google.com/mail/?view=cm&fs=1&to=tavaresxico@gmail.com&su=" + encodeURIComponent(subject);
+          contactLink.target = "_blank";
+          contactLink.rel = "noopener noreferrer";
+        });
+      });
+    </script>
   </body>
 </html>
