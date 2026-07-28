@@ -100,28 +100,32 @@
         const updateContact = () => {
           const button = document.querySelector(".contact-card .button-acid");
           const note = document.querySelector(".contact-card small");
-          if (!button) return;
+          if (!button) return false;
           const isPortuguese = document.documentElement.lang === "pt";
           const subject = isPortuguese
             ? "Human Recovery Performance System — Agendar conversa"
             : "Human Recovery Performance System — Schedule a conversation";
-          button.href = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
-          button.setAttribute(
-            "aria-label",
-            isPortuguese
-              ? "Enviar email a Francisco Tavares para agendar uma conversa"
-              : "Email Francisco Tavares to schedule a conversation"
-          );
-          if (note) note.textContent = email;
+          const href = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+          const label = isPortuguese
+            ? "Enviar email a Francisco Tavares para agendar uma conversa"
+            : "Email Francisco Tavares to schedule a conversation";
+          if (button.getAttribute("href") !== href) button.setAttribute("href", href);
+          if (button.getAttribute("aria-label") !== label) button.setAttribute("aria-label", label);
+          if (note && note.textContent !== email) note.textContent = email;
+          return true;
         };
-        const observer = new MutationObserver(updateContact);
-        observer.observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ["lang"],
-          childList: true,
-          subtree: true
-        });
-        updateContact();
+
+        let attempts = 0;
+        const initialiseContact = () => {
+          if (updateContact() || attempts++ >= 120) return;
+          requestAnimationFrame(initialiseContact);
+        };
+
+        new MutationObserver(() => requestAnimationFrame(updateContact)).observe(
+          document.documentElement,
+          { attributes: true, attributeFilter: ["lang"] }
+        );
+        initialiseContact();
       })();
     </script>
   </body>
